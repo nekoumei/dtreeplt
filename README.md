@@ -7,7 +7,7 @@ it draws Decision Tree not using Graphviz, but only matplotlib.
 
 ## Installation
 `pip install dtreeplt`  
-Requirements are numpy(>=1.15.1) and matplotlib(>=3.0.2) only.  
+Requirements are numpy(>=1.15.1), matplotlib(>=3.0.2) and scikit-learn(>=0.20.2) only.  
 Python 3.6.X.
 
 ## Usage
