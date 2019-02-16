@@ -6,6 +6,20 @@ import matplotlib.cm as cm
 
 
 class dtreeplt():
+    '''
+    Parameters
+    ---------------
+    model: sklearn.tree.DecisionTreeClassifier object
+        You need prepare trained model.
+        If it is None, use iris data and fitting automatically.
+    feature_names: array like object(example numpy.array)
+        list of feature names.
+    target_names: array like object(example numpy.array)
+        list of target names.
+    filled: Bool
+        If it is True, paint nodes to indicate majority class, like sklearn.
+    X, y: not necessary now(future works)
+    '''
     def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True):
         if model is None:
             print('Use Iris Datasets.')
@@ -226,6 +240,11 @@ class = {self.classes[i]}'
         return fig
 
     def view(self):
+        '''
+        return
+        --------------
+        fig: matplotlib.figure object
+        '''
         x_dict, tree_info_dict = self._calc_nodes_relation()
         fig = self.draw_figure(x_dict, tree_info_dict)
         return fig
