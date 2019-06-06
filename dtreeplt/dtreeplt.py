@@ -115,20 +115,20 @@ class dtreeplt():
             tmp = 0
             for link in tree_info_dict['links']:
                 if link['source'] == i:
-                    x = x_dict[link['source']] + append_coordinate[tmp]
+                    x = round(x_dict[link['source']] + append_coordinate[tmp], 5)
                     height = tree_info_dict['nodes_height'][link['target']]
                     for j, node_height in enumerate(tree_info_dict['nodes_height']):
                         try:
                             if (round(height, 1) == round(node_height, 1)) \
                                     and (round(x_dict[j], 1) == round(x, 1)):
                                 x += base_distance * 2
+                                x = round(x, 5)
                         except TypeError:
                             # None参照を無視する
                             pass
 
-                    x_dict[link['target']] = x
+                    x_dict[link['target']] = round(x, 5)
                     tmp += 1
-
         # 親ノードと子ノードのx軸が離れすぎている場合調整する
         for link in tree_info_dict['links']:
             diff = x_dict[link['source']] - x_dict[link['target']]
