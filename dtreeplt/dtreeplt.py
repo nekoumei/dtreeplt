@@ -20,7 +20,7 @@ class dtreeplt():
         If it is True, paint nodes to indicate majority class, like sklearn.
     X, y: not necessary now(future works)
     '''
-    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True):
+    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True, cmap=cm.Accent):
         if model is None:
             print('Use Iris Datasets.')
             model = tree.DecisionTreeClassifier(max_depth=5)
@@ -33,6 +33,7 @@ class dtreeplt():
         self.feature_names = feature_names
         self.target_names = target_names
         self.filled = filled
+        self.cmap = cmap
 
     def _get_iris_data(self):
         from sklearn.datasets import load_iris
@@ -201,7 +202,7 @@ class = {self.classes[i]}'
         texts = self._get_texts(tree_info_dict)
 
         if self.filled:
-            colors = [cm.tab20(self.class_ids[i]) for i in range(len(self.class_ids))]
+            colors = [self.cmap(self.class_ids[i]) for i in range(len(self.class_ids))]
         else:
             colors = ['white' for i in range(len(self.class_ids))]
         for i, text in enumerate(texts):
