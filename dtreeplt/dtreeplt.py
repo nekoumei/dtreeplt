@@ -23,7 +23,7 @@ class dtreeplt():
     def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True, cmap=cm.Accent):
         if model is None:
             print('Use Iris Datasets.')
-            model = tree.DecisionTreeClassifier(max_depth=5)
+            model = tree.DecisionTreeClassifier(min_samples_leaf=.1)
             X, y, feature_names, target_names = self._get_iris_data()
             model.fit(X, y)
 
