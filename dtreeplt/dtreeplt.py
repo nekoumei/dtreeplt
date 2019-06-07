@@ -241,12 +241,25 @@ class = {self.classes[i]}'
 
         return fig
 
-    def view(self):
+    def view(self, interactive=False):
         '''
+        Parameters
+        ---------------
+        interactive: Bool
+
         return
         --------------
-        fig: matplotlib.figure object
+        if interactive:
+            fig: matplotlib.figure object
+        else:
+            None
         '''
         x_dict, tree_info_dict = self._calc_nodes_relation()
-        fig = self.draw_figure(x_dict, tree_info_dict)
-        return fig
+
+        if interactive:
+            import interactive.view_interactive as view_interactive
+            view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model)
+
+        else:
+            fig = self.draw_figure(x_dict, tree_info_dict)
+            return fig
