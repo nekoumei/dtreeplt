@@ -34,6 +34,8 @@ class dtreeplt():
             pass
         elif type(X) == list:
             X = np.array(X)
+        elif X is None:
+            pass
         else:
             assert False, 'X must be pandas DataFrame, numpy array or list'
 
