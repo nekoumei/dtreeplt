@@ -257,8 +257,8 @@ class = {self.classes[i]}'
         x_dict, tree_info_dict = self._calc_nodes_relation()
 
         if interactive:
-            import interactive.view_interactive as view_interactive
-            view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model)
+            from . import interactive as it
+            it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model)
 
         else:
             fig = self.draw_figure(x_dict, tree_info_dict)
