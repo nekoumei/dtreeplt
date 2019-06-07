@@ -106,7 +106,7 @@ class dtreeplt():
             child_counts.append(child_count)
 
         # x軸の配置を調整する
-        base_distance = 0.35
+        base_distance = 0.6
         append_coordinate = [base_distance * -1, base_distance]
         x_dict = {}
         for i in range(tree_info_dict['node_count']):
@@ -130,6 +130,7 @@ class dtreeplt():
 
                     x_dict[link['target']] = round(x, 5)
                     tmp += 1
+
         # 親ノードと子ノードのx軸が離れすぎている場合調整する
         for link in tree_info_dict['links']:
             diff = x_dict[link['source']] - x_dict[link['target']]
@@ -175,7 +176,7 @@ class = {self.classes[i]}'
         fig = plt.figure(
             figsize=[
                 (max(x_dict.values()) - min(x_dict.values())) * 6,
-                tree_info_dict['nodes_height'][0] * 2
+                tree_info_dict['nodes_height'][0] * 5
             ]
         )
         ax = fig.add_subplot(111)
@@ -196,7 +197,7 @@ class = {self.classes[i]}'
             viz_x[i] = x_dict[i]
             viz_y[i] = tree_info_dict['nodes_height'][i]
 
-        rect_width = 0.55
+        rect_width = 1
         rect_height = 0.7
 
         texts = self._get_texts(tree_info_dict)
@@ -222,7 +223,7 @@ class = {self.classes[i]}'
             cx = rx + rectangle.get_width() / 2.0
             cy = ry + rectangle.get_height() / 2.0
             ax.annotate(text, (cx, cy), color='black',
-                        fontsize=10, ha='center', va='center')
+                        fontsize=20, ha='center', va='center')
 
         # 矢印の描画
         for link in tree_info_dict['links']:
