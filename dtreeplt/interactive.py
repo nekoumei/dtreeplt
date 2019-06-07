@@ -30,7 +30,7 @@ def view_interactive(feature_names, target_names, X, y, clf):
 
             # print(show_features)
             clf.fit(X[:, is_shows], y)
-            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names)
+            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X, y=y)
             clear_output()
             _ = dtree.view()
             plt.show()
