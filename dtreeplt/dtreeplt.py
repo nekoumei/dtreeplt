@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn import tree
 import matplotlib.patches as mpatch
 import matplotlib.pyplot as plt
@@ -26,6 +27,15 @@ class dtreeplt():
             model = tree.DecisionTreeClassifier(min_samples_leaf=.1)
             X, y, feature_names, target_names = self._get_iris_data()
             model.fit(X, y)
+
+        if type(X) == pd.core.frame.DataFrame:
+            X = X.values
+        elif type(X) == np.ndarray:
+            pass
+        elif type(X) == list:
+            X = np.array(X)
+        else:
+            assert False, 'X must be pandas DataFrame, numpy array or list'
 
         self.model = model
         self.X = X
@@ -250,9 +260,9 @@ class = {self.classes[i]}'
         return
         --------------
         if interactive:
-            fig: matplotlib.figure object
+            fig: ipywidgets.VBox object
         else:
-            None
+            fig: matplotlib.figure object
         '''
         x_dict, tree_info_dict = self._calc_nodes_relation()
 
