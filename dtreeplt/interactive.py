@@ -25,10 +25,11 @@ def view_interactive(feature_names, target_names, X, y, clf):
     def update_tree(change):
 
         with output:
-            show_features = np.array(feature_names)[[button.value for button in feature_buttons]]
+            is_shows = [button.value for button in feature_buttons]
+            show_features = np.array(feature_names)[is_shows]
 
             # print(show_features)
-            clf.fit(X[show_features], y)
+            clf.fit(X[:, is_shows], y)
             dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names)
             clear_output()
             _ = dtree.view()
