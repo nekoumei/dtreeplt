@@ -42,7 +42,7 @@ def view_interactive(feature_names, target_names, X, y, clf):
     box_layout = widgets.Layout(overflow_x='scroll',
                                 flex_flow='wrap',
                                 display='flex')
-    widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
+    return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
                   widgets.Label('Decision Tree: '), output],
                  layout=widgets.Layout(min_height='500px')
                  )
