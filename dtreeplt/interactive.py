@@ -30,7 +30,6 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
         X_train, y_train = X, y
 
     def update_tree(change):
-        global X, y
         with output:
             is_shows = [button.value for button in feature_buttons]
             show_features = np.array(feature_names)[is_shows]
@@ -41,7 +40,7 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
                 y_pred = clf.predict(X_valid[:, is_shows])
                 accuracy = accuracy_score(y_valid, y_pred)
                 print(f'Accuracy: {accuracy * 100:.3f}%')
-            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X, y=y)
+            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X_train, y=y_train)
             clear_output()
             _ = dtree.view()
             plt.show()
