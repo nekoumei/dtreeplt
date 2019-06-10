@@ -24,16 +24,18 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
 
     output = widgets.Output()
 
+    if eval:
+        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.1, random_state=0, stratify=y)
+    else:
+        X_train, y_train = X, y
+
     def update_tree(change):
         global X, y
         with output:
             is_shows = [button.value for button in feature_buttons]
             show_features = np.array(feature_names)[is_shows]
 
-            if eval:
-                X, X_valid, y, y_valid = train_test_split(X, y, test_size=0.1, random_state=0, stratify=y)
-
-            clf.fit(X[:, is_shows], y)
+            clf.fit(X_train[:, is_shows], y_train)
 
             if eval:
                 y_pred = clf.predict(X_valid[:, is_shows])
