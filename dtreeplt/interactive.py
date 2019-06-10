@@ -39,10 +39,10 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
             if eval:
                 y_pred = clf.predict(X_valid[:, is_shows])
                 accuracy = accuracy_score(y_valid, y_pred)
-                print(f'Accuracy: {accuracy * 100:.3f}%')
             dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X_train, y=y_train)
             clear_output()
-            _ = dtree.view()
+            fig = dtree.view()
+            fig.suptitle(f'Accuracy: {accuracy * 100:.3f}%', x=0, y=0, fontsize=20)
             plt.show()
 
     for button in feature_buttons:
