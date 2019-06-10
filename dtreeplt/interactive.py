@@ -25,7 +25,7 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
     output = widgets.Output()
 
     def update_tree(change):
-
+        global X, y
         with output:
             is_shows = [button.value for button in feature_buttons]
             show_features = np.array(feature_names)[is_shows]
