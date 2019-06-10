@@ -38,6 +38,7 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
             if eval:
                 y_pred = clf.predict(X_valid[:, is_shows])
                 accuracy = accuracy_score(y_valid, y_pred)
+                print(f'Accuracy: {accuracy * 100:.3f}%')
             dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X, y=y)
             clear_output()
             _ = dtree.view()
@@ -51,12 +52,12 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
     box_layout = widgets.Layout(overflow_x='scroll',
                                 flex_flow='wrap',
                                 display='flex')
-    if eval:
-        return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
-                             widgets.Label('Decision Tree: '), output,
-                             widgets.Label(f'Accuracy: {accuracy * 100:.3f}%')],
-                            layout=widgets.Layout(min_height='500px')
-                            )
+    #if eval:
+    #    return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
+    #                         widgets.Label('Decision Tree: '), output,
+    #                         widgets.Label(f'Accuracy: {accuracy * 100:.3f}%')],
+    #                        layout=widgets.Layout(min_height='500px')
+    #                        )
     return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
                   widgets.Label('Decision Tree: '), output],
                  layout=widgets.Layout(min_height='500px')
