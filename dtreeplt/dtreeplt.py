@@ -19,9 +19,18 @@ class dtreeplt():
         list of target names.
     filled: Bool
         If it is True, paint nodes to indicate majority class, like sklearn.
-    X, y: not necessary now(future works)
+    X: numpy array or pandas DataFrame object
+        It is necessary for interacitve mode.
+    y: numpy array object
+        It is necessary for interacitve mode.
+    cmap: matplotlib cm object
+        you can choose colormap for draw decision tree.
+    eval: Bool
+        if True, hold out 9:1 (stratified) and calc valid accuracy.
+        the evaluation run only interactive mode.
     '''
-    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True, cmap=cm.Accent):
+    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None,
+                 filled=True, cmap=cm.Accent, eval=True):
         if model is None:
             print('Use Iris Datasets.')
             model = tree.DecisionTreeClassifier(min_samples_leaf=.1)
@@ -46,6 +55,7 @@ class dtreeplt():
         self.target_names = target_names
         self.filled = filled
         self.cmap = cmap
+        self.eval = eval
 
     def _get_iris_data(self):
         from sklearn.datasets import load_iris
@@ -270,7 +280,7 @@ class = {self.classes[i]}'
 
         if interactive:
             from . import interactive as it
-            return it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model)
+            return it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model, self.eval)
 
         else:
             fig = self.draw_figure(x_dict, tree_info_dict)

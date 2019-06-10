@@ -2,11 +2,13 @@ import ipywidgets as widgets
 from IPython.display import clear_output
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 from dtreeplt import dtreeplt
 
 
-def view_interactive(feature_names, target_names, X, y, clf):
+def view_interactive(feature_names, target_names, X, y, clf, eval):
     feature_buttons = []
     for feature in feature_names:
         feature_buttons.append(widgets.ToggleButton(
@@ -28,8 +30,14 @@ def view_interactive(feature_names, target_names, X, y, clf):
             is_shows = [button.value for button in feature_buttons]
             show_features = np.array(feature_names)[is_shows]
 
-            # print(show_features)
+            if eval:
+                X, X_valid, y, y_valid = train_test_split(X, y, test_size=0.1, random_state=0, stratify=y)
+
             clf.fit(X[:, is_shows], y)
+
+            if eval:
+                y_pred = clf.predict(X_valid[:, is_shows])
+                accuracy = accuracy_score(y_valid, y_pred)
             dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X, y=y)
             clear_output()
             _ = dtree.view()
@@ -43,6 +51,12 @@ def view_interactive(feature_names, target_names, X, y, clf):
     box_layout = widgets.Layout(overflow_x='scroll',
                                 flex_flow='wrap',
                                 display='flex')
+    if eval:
+        return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
+                             widgets.Label('Decision Tree: '), output,
+                             widgets.Label(f'Accuracy: {accuracy * 100:.3f}%')],
+                            layout=widgets.Layout(min_height='500px')
+                            )
     return widgets.VBox([widgets.Label('Select Features: '), widgets.Box(feature_buttons, layout=box_layout),
                   widgets.Label('Decision Tree: '), output],
                  layout=widgets.Layout(min_height='500px')
