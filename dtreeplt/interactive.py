@@ -42,7 +42,7 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
             dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X_train, y=y_train)
             clear_output()
             fig = dtree.view()
-            fig.suptitle(f'Accuracy: {accuracy * 100:.3f}%', x=0, fontsize=20)
+            fig.suptitle(f'Accuracy(Hold Out 9:1): {accuracy * 100:.3f}%', x=0, fontsize=20)
             plt.tight_layout()
             plt.show()
 
