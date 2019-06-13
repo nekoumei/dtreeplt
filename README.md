@@ -18,6 +18,7 @@ If you want to use the latest version, please use them on git.
 `pip install git+https://github.com/nekoumei/dtreeplt.git`
 
 when it comes to update, command like below. 
+
  `pip install git+https://github.com/nekoumei/dtreeplt.git -U`
 
 
