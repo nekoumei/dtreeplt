@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn import tree
 import matplotlib.patches as mpatch
 import matplotlib.pyplot as plt
@@ -18,14 +19,34 @@ class dtreeplt():
         list of target names.
     filled: Bool
         If it is True, paint nodes to indicate majority class, like sklearn.
-    X, y: not necessary now(future works)
+    X: numpy array or pandas DataFrame object
+        It is necessary for interacitve mode.
+    y: numpy array object
+        It is necessary for interacitve mode.
+    cmap: matplotlib cm object
+        you can choose colormap for draw decision tree.
+    eval: Bool
+        if True, hold out 9:1 (stratified) and calc valid accuracy.
+        the evaluation run only interactive mode.
     '''
-    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None, filled=True, cmap=cm.Accent):
+    def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None,
+                 filled=True, cmap=cm.Accent, eval=True):
         if model is None:
             print('Use Iris Datasets.')
-            model = tree.DecisionTreeClassifier(max_depth=5)
+            model = tree.DecisionTreeClassifier(min_samples_leaf=.1)
             X, y, feature_names, target_names = self._get_iris_data()
             model.fit(X, y)
+
+        if type(X) == pd.core.frame.DataFrame:
+            X = X.values
+        elif type(X) == np.ndarray:
+            pass
+        elif type(X) == list:
+            X = np.array(X)
+        elif X is None:
+            pass
+        else:
+            assert False, 'X must be pandas DataFrame, numpy array or list'
 
         self.model = model
         self.X = X
@@ -34,6 +55,7 @@ class dtreeplt():
         self.target_names = target_names
         self.filled = filled
         self.cmap = cmap
+        self.eval = eval
 
     def _get_iris_data(self):
         from sklearn.datasets import load_iris
@@ -241,12 +263,25 @@ class = {self.classes[i]}'
 
         return fig
 
-    def view(self):
+    def view(self, interactive=False):
         '''
+        Parameters
+        ---------------
+        interactive: Bool
+
         return
         --------------
-        fig: matplotlib.figure object
+        if interactive:
+            fig: ipywidgets.VBox object
+        else:
+            fig: matplotlib.figure object
         '''
         x_dict, tree_info_dict = self._calc_nodes_relation()
-        fig = self.draw_figure(x_dict, tree_info_dict)
-        return fig
+
+        if interactive:
+            from . import interactive as it
+            return it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model, self.eval)
+
+        else:
+            fig = self.draw_figure(x_dict, tree_info_dict)
+            return fig
