@@ -1,6 +1,6 @@
 # dtreeplt
 it draws Decision Tree not using Graphviz, but only matplotlib.  
-If `interactive == True`, it draws Interactive Decision Tree on Notebook using only matplotlib.
+If `interactive == True`, it draws Interactive Decision Tree on Notebook.
 
 ## Output Image using proposed method: dtreeplt (using only matplotlib)
 ![graphviz](output/result.png)
