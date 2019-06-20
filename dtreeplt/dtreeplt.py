@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn import tree
+from sklearn.preprocessing import MinMaxScaler
 import matplotlib.patches as mpatch
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -228,6 +229,8 @@ class = {self.classes[i]}'
             colors = [self.cmap(self.class_ids[i]) for i in range(len(self.class_ids))]
         else:
             colors = ['white' for i in range(len(self.class_ids))]
+
+        alphas = 1 - MinMaxScaler().fit_transform(tree_info_dict['impurities'].reshape(-1, 1)).flatten()
         for i, text in enumerate(texts):
             # nodeを表す四角形の描画
             rectangle = mpatch.Rectangle(
@@ -235,7 +238,7 @@ class = {self.classes[i]}'
                 rect_width,
                 rect_height,
                 color=colors[i],
-                alpha=1 - tree_info_dict['impurities'][i],
+                alpha=alphas[i],
                 ec='#000000'
             )
             ax.add_artist(rectangle)
