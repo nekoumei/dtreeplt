@@ -230,7 +230,11 @@ class = {self.classes[i]}'
         else:
             colors = ['white' for i in range(len(self.class_ids))]
 
-        alphas = 1 - MinMaxScaler().fit_transform(tree_info_dict['impurities'].reshape(-1, 1)).flatten()
+        if tree_info_dict["criterion"] == 'gini':
+            alphas = 1 - tree_info_dict['impurities']
+        else:
+            alphas = 1 - MinMaxScaler((0, 0.9)).fit_transform(tree_info_dict['impurities'].reshape(-1, 1)).flatten()
+
         for i, text in enumerate(texts):
             # nodeを表す四角形の描画
             rectangle = mpatch.Rectangle(
