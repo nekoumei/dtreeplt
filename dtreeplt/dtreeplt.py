@@ -72,7 +72,7 @@ class dtreeplt():
     def _get_tree_infomation(self):
         tree_info_dict = {}
         tree_info_dict['samples'] = self.model.tree_.n_node_samples
-        tree_info_dict['values'] = self.model.tree_.value
+        #tree_info_dict['values'] = self.model.tree_.value
         tree_info_dict['features'] = [self.feature_names[i] if i >=0 else 'target' for i in self.model.tree_.feature]
         tree_info_dict['thresholds'] = self.model.tree_.threshold
         tree_info_dict['impurities'] = self.model.tree_.impurity
