@@ -265,7 +265,7 @@ f'class = {self.classes[i]}'
             dy = tree_info_dict['nodes_height'][link['target']] + rect_height
             ax.annotate(s='', xy=(dx, dy), xytext=(x, y),
                         xycoords='data',
-                        arrowprops=dict(arrowstyle='->')
+                        arrowprops=dict(arrowstyle='->', color='black')
                         )
 
         ax.set_xlim(min(x_dict.values()), max(x_dict.values()) + rect_width)
