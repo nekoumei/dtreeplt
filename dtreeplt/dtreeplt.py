@@ -290,7 +290,8 @@ f'class = {self.classes[i]}'
 
         if interactive:
             from . import interactive as it
-            return it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model, self.eval)
+            return it.view_interactive(self.feature_names, self.target_names, self.X, self.y, self.model, self.eval,
+                                       self.disp_values)
 
         else:
             fig = self.draw_figure(x_dict, tree_info_dict)

@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from dtreeplt import dtreeplt
 
 
-def view_interactive(feature_names, target_names, X, y, clf, eval):
+def view_interactive(feature_names, target_names, X, y, clf, eval, disp_values):
     feature_buttons = []
     for feature in feature_names:
         feature_buttons.append(widgets.ToggleButton(
@@ -39,7 +39,8 @@ def view_interactive(feature_names, target_names, X, y, clf, eval):
             if eval:
                 y_pred = clf.predict(X_valid[:, is_shows])
                 accuracy = accuracy_score(y_valid, y_pred)
-            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X_train, y=y_train)
+            dtree = dtreeplt(model=clf, feature_names=show_features, target_names=target_names, X=X_train, y=y_train,
+                             disp_values=disp_values)
             clear_output()
             fig = dtree.view()
             if eval:
