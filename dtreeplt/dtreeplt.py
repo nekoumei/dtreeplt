@@ -31,7 +31,7 @@ class dtreeplt():
         the evaluation run only interactive mode.
     '''
     def __init__(self, model=None, X=None, y=None, feature_names=None, target_names=None,
-                 filled=True, cmap=cm.Accent, eval=True):
+                 filled=True, cmap=cm.Accent, eval=True, disp_values=True):
         if model is None:
             print('Use Iris Datasets.')
             model = tree.DecisionTreeClassifier(min_samples_leaf=.1)
@@ -57,6 +57,7 @@ class dtreeplt():
         self.filled = filled
         self.cmap = cmap
         self.eval = eval
+        self.disp_values = disp_values
 
     def _get_iris_data(self):
         from sklearn.datasets import load_iris
@@ -182,15 +183,17 @@ class dtreeplt():
 
     def _get_texts(self, tree_info_dict):
         texts = []
+        values = ''
         for i in range(tree_info_dict['node_count']):
             if not tree_info_dict['features'][i] == 'target':
                 text = f'{tree_info_dict["features"][i]} <= {tree_info_dict["thresholds"][i]:,.2f}\n'
             else:
                 text = ''
+            if self.disp_values:
+                values = f'values = {tree_info_dict["values"][i]}\n'
             text += f'{tree_info_dict["criterion"]} = {tree_info_dict["impurities"][i]:.2f}\n\
-samples = {tree_info_dict["samples"][i]}\n\
-values = {tree_info_dict["values"][i]}\n\
-class = {self.classes[i]}'
+samples = {tree_info_dict["samples"][i]}\n' + values + \
+f'class = {self.classes[i]}'
             texts.append(text)
 
         return texts
@@ -262,7 +265,7 @@ class = {self.classes[i]}'
             dy = tree_info_dict['nodes_height'][link['target']] + rect_height
             ax.annotate(s='', xy=(dx, dy), xytext=(x, y),
                         xycoords='data',
-                        arrowprops=dict(arrowstyle='->')
+                        arrowprops=dict(arrowstyle='->', color='black')
                         )
 
         ax.set_xlim(min(x_dict.values()), max(x_dict.values()) + rect_width)
