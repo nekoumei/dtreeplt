@@ -2,6 +2,26 @@
 it draws Decision Tree not using Graphviz, but only matplotlib.  
 If `interactive == True`, it draws Interactive Decision Tree on Notebook.
 
+# Note
+On sklearn newer than 0.21, `sklearn.tree.plot_tree` is implemented.  
+This also draws trees not using Graphviz.
+```
+from sklearn.datasets import load_iris
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
+%matplotlib inline
+
+iris = load_iris()
+model = DecisionTreeClassifier()
+model.fit(iris.data, iris.target)
+
+fig = plt.figure(figsize=(15, 8))
+ax = fig.add_subplot()
+plot_tree(model, feature_names=iris.feature_names, ax=ax, class_names=iris.target_names, filled=True);
+```
+![graphviz](output/plot_tree.png)
+
 ## Output Image using proposed method: dtreeplt (using only matplotlib)
 ![graphviz](output/result.png)
 
